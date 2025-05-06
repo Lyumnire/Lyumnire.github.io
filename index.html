@@ -7,16 +7,15 @@
     <style>
         :root {
             --primary-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-            --background-image: url('https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&w=1000&q=80'); /* 默认背景，你可以替换为你喜欢的 */
+            --background-image: url('https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&w=1000&q=80');
             --text-color: #f0f0f0;
-            --accent-color: #007aff; /* Apple blue */
-            --container-bg: rgba(50, 50, 50, 0.5);
+            --accent-color: #007aff;
             --container-bg-light: rgba(255, 255, 255, 0.15);
             --blur-intensity: 10px;
             --border-color: rgba(255, 255, 255, 0.2);
-            --status-active-color: #28a745; /* 绿色 */
-            --status-inactive-color: #888; /* 灰色 */
-            --status-checking-color: #e0e0e0; /* 检查中颜色 */
+            --status-active-color: #28a745;
+            --status-inactive-color: #888;
+            --status-checking-color: #e0e0e0;
         }
 
         body {
@@ -127,33 +126,59 @@
             margin-bottom: 15px;
         }
 
-        .content-section ul {
-            padding-left: 20px;
-        }
-
         .service-info {
              margin-bottom: 20px;
         }
         .service-info p {
-            margin-bottom: 8px; /* 调整服务信息内部段落间距 */
+            margin-bottom: 8px;
         }
 
         .button-link, .platform-link {
             display: inline-block;
             background-color: var(--accent-color);
-            color: white !important; /* 确保按钮文字是白色 */
+            color: white !important;
             padding: 12px 25px;
             text-decoration: none;
             border-radius: 8px;
             font-weight: 500;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            margin: 10px 5px 10px 0; /* 调整按钮外边距 */
+            margin: 10px 5px 10px 0;
             border: none;
         }
 
         .button-link:hover, .platform-link:hover {
             background-color: #0056b3;
             transform: translateY(-2px);
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+            background-color: var(--status-checking-color);
+        }
+        .status-dot.active {
+            background-color: var(--status-active-color);
+        }
+        .status-dot.inactive {
+            background-color: var(--status-inactive-color);
+        }
+
+        .status-text {
+            vertical-align: middle;
+            font-size: 0.9em;
+        }
+        .status-text.active {
+            color: var(--status-active-color);
+        }
+        .status-text.inactive {
+            color: var(--status-inactive-color);
+        }
+        .status-text.checking {
+            color: #aaa;
         }
 
         .platform-grid {
@@ -186,42 +211,6 @@
             display: block;
             margin-bottom: 5px;
         }
-        .log-entry p {
-            margin: 0;
-            font-size: 1em;
-        }
-
-        /* 状态指示灯 */
-        .status-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 8px;
-            vertical-align: middle;
-            background-color: var(--status-checking-color); /* 初始为检查中颜色 */
-        }
-        .status-dot.active {
-            background-color: var(--status-active-color);
-        }
-        .status-dot.inactive {
-            background-color: var(--status-inactive-color);
-        }
-
-        .status-text {
-            vertical-align: middle;
-            font-size: 0.9em;
-        }
-        .status-text.active {
-            color: var(--status-active-color);
-        }
-        .status-text.inactive {
-            color: var(--status-inactive-color);
-        }
-        .status-text.checking {
-            color: #aaa; /* 检查中文字颜色 */
-        }
-
 
         footer {
             text-align: center;
@@ -252,11 +241,7 @@
             main {
                 padding: 150px 15px 15px;
             }
-            .content-section h2 {
-                font-size: 1.8em;
-            }
         }
-
     </style>
 </head>
 <body>
@@ -283,9 +268,8 @@
         <section id="lab-access" class="content-section">
             <h2>本地服务中心</h2>
             <p>
-                这里提供到我本地部署的一些服务的快速访问入口。状态指示器会尝试检查服务是否在线。
-                <br><em>请注意：这些服务托管在我的本地网络中 (例如 <code>100.x.x.x</code> 地址段)，你可能需要处于同一网络或通过特定网络配置（如VPN、Tailscale等）才能访问。
-                浏览器安全策略 (混合内容、CORS) 也可能影响状态检查的准确性。</em>
+                这里提供到我本地部署的一些服务的快速访问入口。当你访问此页面时，你的浏览器会尝试检查这些服务的状态。
+                <br><em>请注意：这些服务通常托管在我的本地网络中。因此，只有当你与这些服务处于同一网络或通过特定网络配置（如VPN、Tailscale等）连接时，状态检查和访问才会成功。浏览器安全策略 (混合内容、CORS) 也可能影响状态检查的准确性。IP地址本身不会在此页面上直接显示，但访问按钮会链接到它们。</em>
             </p>
             <div class="service-info">
                 <h3><span style="color: var(--accent-color);">🧠</span> 本地大模型 (Ollama + OpenWebUI)</h3>
@@ -293,7 +277,6 @@
                     状态: <span class="status-dot" id="ollama-status-dot"></span> <span class="status-text checking" id="ollama-status-text">检查中...</span>
                 </p>
                 <p>
-                    访问地址：<code>100.93.32.3:3000</code> <br>
                     这是一个本地部署的大语言模型界面，用于实验和学习。
                 </p>
                 <a href="http://100.93.32.3:3000" target="_blank" class="button-link">访问 OpenWebUI</a>
@@ -310,7 +293,6 @@
                     状态: <span class="status-dot" id="alist-status-dot"></span> <span class="status-text checking" id="alist-status-text">检查中...</span>
                 </p>
                 <p>
-                    访问地址：<code>100.117.7.99:5244</code> <br>
                     Alist 是一个支持多存储的文件列表程序，我用它来管理我的本地文件。
                 </p>
                 <a href="http://100.117.7.99:5244" target="_blank" class="button-link">访问 Alist 云盘</a>
@@ -340,13 +322,19 @@
         <section id="log" class="content-section">
             <h2>更新日志</h2>
             <div class="log-entry">
-                <span class="date">YYYY-MM-DD</span> <p>网站初步搭建完成，包含主页、本地服务链接、平台导航和更新日志模块。</p>
+                <span class="date">YYYY-MM-DD</span>
+                <p>网站初步搭建完成，包含主页、本地服务链接、平台导航和更新日志模块。</p>
             </div>
             <div class="log-entry">
-                <span class="date">YYYY-MM-DD</span> <p>添加了 Apple 毛玻璃风格 UI，并优化了导航体验。</p>
+                <span class="date">YYYY-MM-DD</span>
+                <p>添加了 Apple 毛玻璃风格 UI，并优化了导航体验。</p>
             </div>
              <div class="log-entry">
-                <span class="date">YYYY-MM-DD</span> <p>新增本地服务状态自动检测功能。</p>
+                <span class="date">YYYY-MM-DD</span>
+                <p>新增本地服务状态自动检测功能 (由访问者浏览器执行)。</p>
+            </div>
+            <div class="log-entry">
+                <span class="date">YYYY-MM-DD</span> <p>优化本地服务区域：明确状态检查由客户端浏览器执行，并从UI文本中隐藏IP地址。</p>
             </div>
         </section>
     </main>
@@ -394,14 +382,15 @@
 
             document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-            // --- 服务状态检查逻辑 ---
+            // --- 服务状态检查逻辑 (此脚本在访问者的浏览器中运行) ---
+            // 当用户加载此页面时，下面的JavaScript代码将在他们的浏览器中执行，
+            // 尝试连接到指定的本地服务URL，以确定其状态。
+            // GitHub服务器本身不参与此检查过程。
             async function checkServiceStatus(url, dotElement, textElement, serviceName, timeout = 3000) {
-                // 重置状态为检查中
                 dotElement.style.backgroundColor = 'var(--status-checking-color)';
                 dotElement.classList.remove('active', 'inactive');
                 textElement.textContent = '检查中...';
                 textElement.className = 'status-text checking';
-
 
                 const controller = new AbortController();
                 const signal = controller.signal;
@@ -410,20 +399,18 @@
                 let isLikelyUp = false;
 
                 try {
-                    // 使用 'no-cors' 模式。这表示我们无法读取响应内容或状态码，
-                    // 但如果 fetch 没有抛出网络错误，通常表示服务在网络层面是可达的。
-                    // 添加时间戳参数尝试绕过缓存。
+                    // 使用 'no-cors' 模式。这意味着脚本无法读取响应内容或状态码，
+                    // 但如果 fetch 调用没有抛出网络错误，通常表示服务在网络层面是可达的。
+                    // 时间戳参数用于尝试避免浏览器缓存干扰检查结果。
                     await fetch(url + `?t=${new Date().getTime()}`, {
-                        method: 'GET', // GET 通常比 HEAD 更广泛支持，尤其对于UI服务
+                        method: 'GET',
                         mode: 'no-cors',
                         signal: signal
                     });
-                    isLikelyUp = true; // 如果 fetch 成功（即使是 opaque response），我们认为它"活跃"
+                    isLikelyUp = true;
                 } catch (error) {
-                    // AbortError 是我们自己触发的超时
-                    // 其他错误（如 TypeError: Failed to fetch）通常表示网络问题或服务不可达
-                    if (error.name !== 'AbortError') {
-                        console.warn(`检查服务 ${serviceName} (${url}) 失败:`, error.message);
+                    if (error.name !== 'AbortError') { // AbortError 是我们主动触发的超时
+                        // console.warn(`客户端检查服务 ${serviceName} (${url}) 失败:`, error.message);
                     }
                     isLikelyUp = false;
                 } finally {
@@ -443,16 +430,19 @@
                 }
             }
 
-            // 定义服务信息并执行检查
+            // 定义服务信息 (URL包含IP，但IP不会在UI文本中直接显示)
+            // 这些URL将由访问者的浏览器用于状态检查和点击访问。
             const servicesToChecks = [
                 {
-                    url: 'http://100.93.32.3:3000', // Ollama+OpenWebUI
+                    // Ollama+OpenWebUI的URL，IP地址不会在页面文本中直接显示
+                    url: 'http://100.93.32.3:3000',
                     dotId: 'ollama-status-dot',
                     textId: 'ollama-status-text',
                     name: 'Ollama+OpenWebUI'
                 },
                 {
-                    url: 'http://100.117.7.99:5244', // Alist
+                    // Alist的URL，IP地址不会在页面文本中直接显示
+                    url: 'http://100.117.7.99:5244',
                     dotId: 'alist-status-dot',
                     textId: 'alist-status-text',
                     name: 'Alist'
@@ -466,7 +456,8 @@
                     checkServiceStatus(service.url, dotElement, textElement, service.name);
                 }
             });
-            // 你可以设置一个定时器定期刷新状态
+
+            // 可选: 定期刷新状态 (例如每30秒)
             // setInterval(() => {
             //     servicesToChecks.forEach(service => {
             //         const dotElement = document.getElementById(service.dotId);
@@ -475,7 +466,7 @@
             //             checkServiceStatus(service.url, dotElement, textElement, service.name);
             //         }
             //     });
-            // }, 30000); // 例如每30秒检查一次
+            // }, 30000);
         });
     </script>
 </body>
