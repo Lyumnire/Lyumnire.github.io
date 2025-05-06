@@ -10,10 +10,13 @@
             --background-image: url('https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D&w=1000&q=80'); /* 默认背景，你可以替换为你喜欢的 */
             --text-color: #f0f0f0;
             --accent-color: #007aff; /* Apple blue */
-            --container-bg: rgba(50, 50, 50, 0.5); /* 半透明深色背景，用于毛玻璃效果 */
-            --container-bg-light: rgba(255, 255, 255, 0.15); /* 另一种毛玻璃背景选项 */
+            --container-bg: rgba(50, 50, 50, 0.5);
+            --container-bg-light: rgba(255, 255, 255, 0.15);
             --blur-intensity: 10px;
             --border-color: rgba(255, 255, 255, 0.2);
+            --status-active-color: #28a745; /* 绿色 */
+            --status-inactive-color: #888; /* 灰色 */
+            --status-checking-color: #e0e0e0; /* 检查中颜色 */
         }
 
         body {
@@ -29,11 +32,11 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            overflow-x: hidden; /* 防止水平滚动条 */
+            overflow-x: hidden;
         }
 
         header {
-            position: fixed; /* 固定头部 */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -80,16 +83,16 @@
 
         main {
             flex: 1;
-            padding: 100px 30px 30px; /* 顶部padding为header留出空间 */
+            padding: 100px 30px 30px;
             display: flex;
             flex-direction: column;
-            align-items: center; /* 使内容块居中 */
+            align-items: center;
         }
 
         .content-section {
-            display: none; /* 默认隐藏所有板块 */
+            display: none;
             width: 100%;
-            max-width: 900px; /* 内容最大宽度 */
+            max-width: 900px;
             margin-bottom: 30px;
             padding: 30px;
             background: var(--container-bg-light);
@@ -128,33 +131,31 @@
             padding-left: 20px;
         }
 
-        /* 登录/访问区 - 调整为此处不设实际登录 */
-        #login-gate {
-            text-align: center;
-        }
-        #login-gate .service-info {
+        .service-info {
              margin-bottom: 20px;
+        }
+        .service-info p {
+            margin-bottom: 8px; /* 调整服务信息内部段落间距 */
         }
 
         .button-link, .platform-link {
             display: inline-block;
             background-color: var(--accent-color);
-            color: white;
+            color: white !important; /* 确保按钮文字是白色 */
             padding: 12px 25px;
             text-decoration: none;
             border-radius: 8px;
             font-weight: 500;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            margin: 10px;
+            margin: 10px 5px 10px 0; /* 调整按钮外边距 */
             border: none;
         }
 
         .button-link:hover, .platform-link:hover {
-            background-color: #0056b3; /* Darker accent */
+            background-color: #0056b3;
             transform: translateY(-2px);
         }
 
-        /* 平台导航 */
         .platform-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -171,13 +172,7 @@
         .platform-card:hover {
             transform: scale(1.05);
         }
-        .platform-card img { /* 如果你想为平台链接添加图标 */
-            width: 40px;
-            height: 40px;
-            margin-bottom: 10px;
-        }
 
-        /* 更新日志 */
         .log-entry {
             background: rgba(0,0,0,0.1);
             padding: 15px;
@@ -196,6 +191,38 @@
             font-size: 1em;
         }
 
+        /* 状态指示灯 */
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+            background-color: var(--status-checking-color); /* 初始为检查中颜色 */
+        }
+        .status-dot.active {
+            background-color: var(--status-active-color);
+        }
+        .status-dot.inactive {
+            background-color: var(--status-inactive-color);
+        }
+
+        .status-text {
+            vertical-align: middle;
+            font-size: 0.9em;
+        }
+        .status-text.active {
+            color: var(--status-active-color);
+        }
+        .status-text.inactive {
+            color: var(--status-inactive-color);
+        }
+        .status-text.checking {
+            color: #aaa; /* 检查中文字颜色 */
+        }
+
+
         footer {
             text-align: center;
             padding: 20px;
@@ -204,10 +231,9 @@
             -webkit-backdrop-filter: blur(var(--blur-intensity));
             color: var(--text-color);
             border-top: 1px solid var(--border-color);
-            margin-top: auto; /* 确保页脚在内容不足时也置底 */
+            margin-top: auto;
         }
 
-        /* 响应式设计 */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -218,13 +244,13 @@
             }
             nav ul {
                 justify-content: center;
-                flex-wrap: wrap; /* 允许换行 */
+                flex-wrap: wrap;
             }
             nav ul li {
                 margin: 5px 10px;
             }
             main {
-                padding: 150px 15px 15px; /* 调整移动端头部空间 */
+                padding: 150px 15px 15px;
             }
             .content-section h2 {
                 font-size: 1.8em;
@@ -250,30 +276,29 @@
     <main>
         <section id="home" class="content-section active">
             <h2>欢迎来到 Lyumni's Lab</h2>
-            <p>
-                这里是 Lyumni 的个人实验空间。你可以在这里找到我的项目、笔记以及一些有趣的工具和服务。
-                本网站旨在整合我的数字足迹，并提供一个便捷的访问入口。
-            </p>
-            <p>
-                请随意探索，希望你能在这里发现有价值的内容！
-            </p>
+            <p>这里是 Lyumni 的个人实验空间。你可以在这里找到我的项目、笔记以及一些有趣的工具和服务。本网站旨在整合我的数字足迹，并提供一个便捷的访问入口。</p>
+            <p>请随意探索，希望你能在这里发现有价值的内容！</p>
         </section>
 
         <section id="lab-access" class="content-section">
             <h2>本地服务中心</h2>
             <p>
-                这里提供到我本地部署的一些服务的快速访问入口。请注意：这些服务托管在我的本地网络中，
-                你可能需要处于同一网络或通过特定网络配置（如VPN、Tailscale、ZeroTier等）才能访问。
+                这里提供到我本地部署的一些服务的快速访问入口。状态指示器会尝试检查服务是否在线。
+                <br><em>请注意：这些服务托管在我的本地网络中 (例如 <code>100.x.x.x</code> 地址段)，你可能需要处于同一网络或通过特定网络配置（如VPN、Tailscale等）才能访问。
+                浏览器安全策略 (混合内容、CORS) 也可能影响状态检查的准确性。</em>
             </p>
             <div class="service-info">
                 <h3><span style="color: var(--accent-color);">🧠</span> 本地大模型 (Ollama + OpenWebUI)</h3>
                 <p>
-                    访问地址：<code>100.93.32.3:3000</code> (该服务可能需要身份验证) <br>
+                    状态: <span class="status-dot" id="ollama-status-dot"></span> <span class="status-text checking" id="ollama-status-text">检查中...</span>
+                </p>
+                <p>
+                    访问地址：<code>100.93.32.3:3000</code> <br>
                     这是一个本地部署的大语言模型界面，用于实验和学习。
                 </p>
                 <a href="http://100.93.32.3:3000" target="_blank" class="button-link">访问 OpenWebUI</a>
                 <p style="font-size: 0.9em; margin-top: 10px;">
-                    <em>提示: 点击链接将在新标签页中打开。如果无法访问，请检查你的网络连接是否能访问该本地 IP 地址。</em>
+                    <em>提示: 点击链接将在新标签页中打开。</em>
                 </p>
             </div>
 
@@ -281,13 +306,16 @@
 
             <div class="service-info">
                 <h3><span style="color: var(--accent-color);">☁️</span> Alist 本地云盘</h3>
+                 <p>
+                    状态: <span class="status-dot" id="alist-status-dot"></span> <span class="status-text checking" id="alist-status-text">检查中...</span>
+                </p>
                 <p>
-                    访问地址：<code>100.117.7.99:5244</code> (该服务可能需要身份验证) <br>
+                    访问地址：<code>100.117.7.99:5244</code> <br>
                     Alist 是一个支持多存储的文件列表程序，我用它来管理我的本地文件。
                 </p>
                 <a href="http://100.117.7.99:5244" target="_blank" class="button-link">访问 Alist 云盘</a>
                  <p style="font-size: 0.9em; margin-top: 10px;">
-                    <em>提示: 点击链接将在新标签页中打开。如果无法访问，请检查你的网络连接是否能访问该本地 IP 地址。</em>
+                    <em>提示: 点击链接将在新标签页中打开。</em>
                 </p>
             </div>
         </section>
@@ -306,14 +334,6 @@
                     <p>我的视频分享和频道。</p>
                     <a href="" target="_blank" class="platform-link">前往哔哩哔哩</a>
                 </div>
-                " target="_blank" class="platform-link">访问博客</a>
-                </div>
-                <div class="platform-card">
-                    <h3>知乎</h3>
-                    <p>我的知乎主页，分享知识和见解。</p>
-                    <a href="" target="_blank" class="platform-link">访问知乎</a>
-                </div>
-                -->
             </div>
         </section>
 
@@ -325,12 +345,14 @@
             <div class="log-entry">
                 <span class="date">YYYY-MM-DD</span> <p>添加了 Apple 毛玻璃风格 UI，并优化了导航体验。</p>
             </div>
-            </section>
-
+             <div class="log-entry">
+                <span class="date">YYYY-MM-DD</span> <p>新增本地服务状态自动检测功能。</p>
+            </div>
+        </section>
     </main>
 
     <footer>
-        <p>&copy; <span id="currentYear"></span> Lyumni's Lab. </p>
+        <p>&copy; <span id="currentYear"></span> Lyumni's Lab.</p>
     </footer>
 
     <script>
@@ -340,21 +362,11 @@
 
             function showSection(targetId) {
                 sections.forEach(section => {
-                    if (section.id === targetId) {
-                        section.classList.add('active');
-                    } else {
-                        section.classList.remove('active');
-                    }
+                    section.classList.toggle('active', section.id === targetId);
                 });
-
                 navLinks.forEach(link => {
-                    if (link.getAttribute('href').substring(1) === targetId) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
+                    link.classList.toggle('active', link.getAttribute('href').substring(1) === targetId);
                 });
-                // 更新 URL hash，但不触发页面滚动
                 if (history.pushState) {
                     history.pushState(null, null, `#${targetId}`);
                 } else {
@@ -370,8 +382,7 @@
                 });
             });
 
-            // 处理页面加载时的 hash
-            let initialSectionId = 'home'; // 默认显示主页
+            let initialSectionId = 'home';
             if (window.location.hash) {
                 const hashId = window.location.hash.substring(1);
                 const targetSection = document.getElementById(hashId);
@@ -381,9 +392,90 @@
             }
             showSection(initialSectionId);
 
-
-            // 更新页脚年份
             document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // --- 服务状态检查逻辑 ---
+            async function checkServiceStatus(url, dotElement, textElement, serviceName, timeout = 3000) {
+                // 重置状态为检查中
+                dotElement.style.backgroundColor = 'var(--status-checking-color)';
+                dotElement.classList.remove('active', 'inactive');
+                textElement.textContent = '检查中...';
+                textElement.className = 'status-text checking';
+
+
+                const controller = new AbortController();
+                const signal = controller.signal;
+                const fetchTimeout = setTimeout(() => controller.abort(), timeout);
+
+                let isLikelyUp = false;
+
+                try {
+                    // 使用 'no-cors' 模式。这表示我们无法读取响应内容或状态码，
+                    // 但如果 fetch 没有抛出网络错误，通常表示服务在网络层面是可达的。
+                    // 添加时间戳参数尝试绕过缓存。
+                    await fetch(url + `?t=${new Date().getTime()}`, {
+                        method: 'GET', // GET 通常比 HEAD 更广泛支持，尤其对于UI服务
+                        mode: 'no-cors',
+                        signal: signal
+                    });
+                    isLikelyUp = true; // 如果 fetch 成功（即使是 opaque response），我们认为它"活跃"
+                } catch (error) {
+                    // AbortError 是我们自己触发的超时
+                    // 其他错误（如 TypeError: Failed to fetch）通常表示网络问题或服务不可达
+                    if (error.name !== 'AbortError') {
+                        console.warn(`检查服务 ${serviceName} (${url}) 失败:`, error.message);
+                    }
+                    isLikelyUp = false;
+                } finally {
+                    clearTimeout(fetchTimeout);
+                }
+
+                if (isLikelyUp) {
+                    dotElement.style.backgroundColor = 'var(--status-active-color)';
+                    dotElement.classList.add('active');
+                    textElement.textContent = '活跃';
+                    textElement.className = 'status-text active';
+                } else {
+                    dotElement.style.backgroundColor = 'var(--status-inactive-color)';
+                    dotElement.classList.add('inactive');
+                    textElement.textContent = '未启动';
+                    textElement.className = 'status-text inactive';
+                }
+            }
+
+            // 定义服务信息并执行检查
+            const servicesToChecks = [
+                {
+                    url: 'http://100.93.32.3:3000', // Ollama+OpenWebUI
+                    dotId: 'ollama-status-dot',
+                    textId: 'ollama-status-text',
+                    name: 'Ollama+OpenWebUI'
+                },
+                {
+                    url: 'http://100.117.7.99:5244', // Alist
+                    dotId: 'alist-status-dot',
+                    textId: 'alist-status-text',
+                    name: 'Alist'
+                }
+            ];
+
+            servicesToChecks.forEach(service => {
+                const dotElement = document.getElementById(service.dotId);
+                const textElement = document.getElementById(service.textId);
+                if (dotElement && textElement) {
+                    checkServiceStatus(service.url, dotElement, textElement, service.name);
+                }
+            });
+            // 你可以设置一个定时器定期刷新状态
+            // setInterval(() => {
+            //     servicesToChecks.forEach(service => {
+            //         const dotElement = document.getElementById(service.dotId);
+            //         const textElement = document.getElementById(service.textId);
+            //         if (dotElement && textElement) {
+            //             checkServiceStatus(service.url, dotElement, textElement, service.name);
+            //         }
+            //     });
+            // }, 30000); // 例如每30秒检查一次
         });
     </script>
 </body>
