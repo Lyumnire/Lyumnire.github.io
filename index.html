@@ -13,11 +13,9 @@
             --container-bg-light: rgba(255, 255, 255, 0.15);
             --blur-intensity: 10px;
             --border-color: rgba(255, 255, 255, 0.2);
-            --status-active-color: #28a745;
-            --status-inactive-color: #888;
-            --status-checking-color: #e0e0e0;
+            /* 移除了与状态指示相关的颜色变量 */
         }
-        /* ... (其他 CSS 样式保持不变，为简洁省略) ... */
+
         body {
             font-family: var(--primary-font);
             margin: 0;
@@ -151,35 +149,7 @@
             transform: translateY(-2px);
         }
 
-        .status-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 8px;
-            vertical-align: middle;
-            background-color: var(--status-checking-color);
-        }
-        .status-dot.active {
-            background-color: var(--status-active-color);
-        }
-        .status-dot.inactive {
-            background-color: var(--status-inactive-color);
-        }
-
-        .status-text {
-            vertical-align: middle;
-            font-size: 0.9em;
-        }
-        .status-text.active {
-            color: var(--status-active-color);
-        }
-        .status-text.inactive {
-            color: var(--status-inactive-color);
-        }
-        .status-text.checking {
-            color: #aaa;
-        }
+        /* 移除了 .status-dot 和 .status-text 相关的所有 CSS 规则 */
 
         .platform-grid {
             display: grid;
@@ -268,15 +238,11 @@
         <section id="lab-access" class="content-section">
             <h2>本地服务中心</h2>
             <p>
-                这里提供到我本地部署的一些服务的快速访问入口。当你访问此页面时，你的浏览器会尝试检查这些服务的状态。
-                <br><em>请注意：这些服务通常托管在我的本地网络中。因此，只有当你与这些服务处于同一网络或通过特定网络配置（如VPN、Tailscale等）连接时，状态检查和访问才会成功。浏览器安全策略 (混合内容、CORS) 也可能影响状态检查的准确性。IP地址本身不会在此页面上直接显示，但访问按钮会链接到它们。
-                <br><strong>如果某个服务状态显示不正确 (例如，Alist实际已启动但显示未启动)，请打开浏览器开发者控制台 (通常按F12) 查看是否有相关错误信息，并确认服务URL的协议(HTTP/HTTPS)是否正确。</strong></em>
+                这里提供到我本地部署的一些服务的快速访问入口。
+                <br><em>请注意：这些服务通常托管在你的本地网络中。因此，你需要与这些服务处于同一网络或通过特定网络配置（如VPN、Tailscale等）连接，才能成功访问。</em>
             </p>
             <div class="service-info">
                 <h3><span style="color: var(--accent-color);">🧠</span> 本地大模型 (Ollama + OpenWebUI)</h3>
-                <p>
-                    状态: <span class="status-dot" id="ollama-status-dot"></span> <span class="status-text checking" id="ollama-status-text">检查中...</span>
-                </p>
                 <p>
                     这是一个本地部署的大语言模型界面，用于实验和学习。
                 </p>
@@ -291,14 +257,11 @@
             <div class="service-info">
                 <h3><span style="color: var(--accent-color);">☁️</span> Alist 本地云盘</h3>
                  <p>
-                    状态: <span class="status-dot" id="alist-status-dot"></span> <span class="status-text checking" id="alist-status-text">检查中...</span>
-                </p>
-                <p>
                     Alist 是一个支持多存储的文件列表程序，我用它来管理我的本地文件。
                 </p>
                 <a href="http://100.117.7.99:5244" target="_blank" class="button-link">访问 Alist 云盘</a>
                  <p style="font-size: 0.9em; margin-top: 10px;">
-                    <em>提示: 点击链接将在新标签页中打开。请确保JavaScript中配置的Alist URL协议 (HTTP/HTTPS) 与你实际访问方式一致。</em>
+                    <em>提示: 点击链接将在新标签页中打开。</em>
                 </p>
             </div>
         </section>
@@ -330,16 +293,15 @@
                 <span class="date">YYYY-MM-DD</span>
                 <p>添加了 Apple 毛玻璃风格 UI，并优化了导航体验。</p>
             </div>
-             <div class="log-entry">
-                <span class="date">YYYY-MM-DD</span>
-                <p>新增本地服务状态自动检测功能 (由访问者浏览器执行)。</p>
-            </div>
             <div class="log-entry">
                 <span class="date">YYYY-MM-DD</span>
                 <p>优化本地服务区域：明确状态检查由客户端浏览器执行，并从UI文本中隐藏IP地址。</p>
             </div>
             <div class="log-entry">
-                <span class="date">2025-05-06</span> <p>更新个人平台链接 (GitHub, Bilibili)。针对Alist状态检测问题，增加了调试提示，并强调检查URL协议。</p>
+                <span class="date">2025-05-06</span> <p>重要更新：由于浏览器混合内容安全策略，从HTTPS页面自动检查本地HTTP服务状态的功能受限。UI已更新以反映此限制。</p>
+            </div>
+            <div class="log-entry">
+                <span class="date">2025-05-06</span> <p>移除了本地服务状态指示功能，以简化界面并避免因浏览器安全限制造成的混淆。</p>
             </div>
         </section>
     </main>
@@ -350,7 +312,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // ... (导航和页面初始化逻辑保持不变，为简洁省略) ...
             const navLinks = document.querySelectorAll('nav .nav-link');
             const sections = document.querySelectorAll('.content-section');
 
@@ -388,80 +349,9 @@
 
             document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-
-            async function checkServiceStatus(url, dotElement, textElement, serviceName, timeout = 3000) {
-                dotElement.style.backgroundColor = 'var(--status-checking-color)';
-                dotElement.classList.remove('active', 'inactive');
-                textElement.textContent = '检查中...';
-                textElement.className = 'status-text checking';
-
-                const controller = new AbortController();
-                const signal = controller.signal;
-                const fetchTimeout = setTimeout(() => controller.abort(), timeout);
-
-                let isLikelyUp = false;
-
-                try {
-                    await fetch(url + `?t=${new Date().getTime()}`, {
-                        method: 'GET',
-                        mode: 'no-cors',
-                        signal: signal
-                    });
-                    isLikelyUp = true;
-                } catch (error) {
-                    if (error.name !== 'AbortError') {
-                        // 输出更详细的错误信息到控制台，帮助调试
-                        console.warn(`客户端检查服务 ${serviceName} (${url}) 失败:`, error);
-                    } else {
-                        // console.log(`服务 ${serviceName} (${url}) 检查超时。`);
-                    }
-                    isLikelyUp = false;
-                } finally {
-                    clearTimeout(fetchTimeout);
-                }
-
-                if (isLikelyUp) {
-                    dotElement.style.backgroundColor = 'var(--status-active-color)';
-                    dotElement.classList.add('active');
-                    textElement.textContent = '活跃';
-                    textElement.className = 'status-text active';
-                } else {
-                    dotElement.style.backgroundColor = 'var(--status-inactive-color)';
-                    dotElement.classList.add('inactive');
-                    textElement.textContent = '未启动';
-                    textElement.className = 'status-text inactive';
-                }
-            }
-
-            const servicesToChecks = [
-                {
-                    url: 'http://100.93.32.3:3000',
-                    dotId: 'ollama-status-dot',
-                    textId: 'ollama-status-text',
-                    name: 'Ollama+OpenWebUI'
-                },
-                {
-                    // Alist URL - 请务必确认这里的协议 (http 或 https) 与你实际访问Alist时使用的协议一致！
-                    // 如果你通过 https://100.117.7.99:5244 访问Alist, 请将下面的 'http' 修改为 'https'
-                    url: 'http://100.117.7.99:5244',
-                    dotId: 'alist-status-dot',
-                    textId: 'alist-status-text',
-                    name: 'Alist'
-                }
-            ];
-
-            servicesToChecks.forEach(service => {
-                const dotElement = document.getElementById(service.dotId);
-                const textElement = document.getElementById(service.textId);
-                if (dotElement && textElement) {
-                    checkServiceStatus(service.url, dotElement, textElement, service.name);
-                }
-            });
-
-            // Optional: Refresh status periodically
-            // setInterval(() => {
-            //     servicesToChecks.forEach(service => { /* ... same logic ... */ });
-            // }, 30000);
+            // --- 服务状态指示逻辑已完全移除 ---
+            // 不再需要 setServiceStatusToRestricted 函数
+            // 不再需要 servicesToUpdateUI 数组和相关循环
         });
     </script>
 </body>
